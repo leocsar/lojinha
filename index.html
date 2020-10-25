@@ -8,11 +8,21 @@
     <title>Lojinha</title>
   </head>
   <body onselectstart="return false" >
-    <h1>Lojinha</h1>
+    <header>
+      <h1>Lojinha</h1>
+  
+      <button id="cart" class="cart">
+        <img src="./icons/shopping-cart.svg" alt="Cart icon">
+        <span id="cart-items" class="cart-items">0</span>
+      </button>
+    </header>
 
     <div id="content" class="default-display content"></div>
 
-    <script type="text/javascript" src="products.json"></script>
+    <button id='wpp-button' class="floating-button">
+      <img src="./icons/whatsapp.svg" alt="WhatsApp">
+    </button>
+
     <script src="./scripts.js"></script>
   </body>
 </html>
