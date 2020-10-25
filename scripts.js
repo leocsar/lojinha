@@ -1,6 +1,12 @@
 const content = document.getElementById('content');
 const wppButton = document.getElementById('wpp-button');
 const cartItems = document.getElementById('cart-items');
+const modal = document.getElementById('modal');
+const opacityBackground = document.getElementById('opacity-background');
+const cart = document.getElementById('cart');
+const cartContent = document.getElementById('cart-content');
+const closeModalButton = document.getElementById('close-modal');
+const sendButton = document.getElementById('send');
 
 const products = [
   { "price": 10.00, "type": "livro", "name": "The Walking Dead - A ascensão do governador" },
@@ -35,7 +41,40 @@ const addToCart = (product) => {
   refreshCart();
 }
 
+const removeOfCart = (product) => {
+  let items = JSON.parse(localStorage.getItem('cart')) || [];
+
+  items = items.filter(item => {
+    return item.name !== product.name;
+  })
+
+  localStorage.setItem('cart', JSON.stringify(items));
+
+  refreshCart();
+}
+
 const refreshCart = () => {
+  const items = getCartItems();
+
+  if (items.length == 0) {
+    cartContent.innerHTML = 'Carrinho vazio!';
+    sendButton.setAttribute('disabled', 'true');
+    sendButton.style.pointerEvents = 'none';
+  } else {
+    cartContent.innerHTML = '';
+    sendButton.style.pointerEvents = 'all';
+    sendButton.removeAttribute('disabled', 'false');
+
+    items.map(item => {
+      let card = document.createElement('div');
+  
+      card.setAttribute('class', 'cart-card');
+      card.innerHTML = item.name;
+  
+      cartContent.appendChild(card);
+    })
+  }
+
   cartItems.innerHTML = getTotal().toLocaleString('pt-br',{style: 'currency', currency: 'BRL'});
 }
 
@@ -51,6 +90,42 @@ const getTotal = () => {
   }, 0);
 
   return total;
+}
+
+const getCartItems = () => {
+  const cart = JSON.parse(localStorage.getItem('cart'));
+
+  if (cart == null) {
+    return [];
+  }
+
+  return cart;
+}
+
+sendButton.onclick = () => {
+  let message = 'Olá!\n\nTenho interesse nos seguintes itens da lojinha:\n\n';
+  let link = document.createElement('a');
+
+  getCartItems().map(item => {
+    message += `${item.price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})} - ${item.type} ${item.name}\n`;
+  })
+
+  message += `\n*Total: ${getTotal().toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}*`;
+
+  message = window.encodeURIComponent(message);
+  
+  link.setAttribute('href', `https://api.whatsapp.com/send?phone=556282067934&text=${message}`)
+  link.click();
+}
+
+cart.onclick = () => {
+  modal.style.display = 'flex';
+  opacityBackground.style.display = 'flex';
+}
+
+closeModalButton.onclick = () => {
+  modal.style.display = 'none';
+  opacityBackground.style.display = 'none';
 }
 
 refreshCart();
@@ -69,22 +144,38 @@ products.map(product => {
   let image = document.createElement('img');
   let button = document.createElement('button');
   let link = document.createElement('a');
-  let buttonText = document.createTextNode('+');
   let titleText = document.createTextNode(product.name);
 
   let message = window.encodeURIComponent(`Olá!\n\nTenho interesse no ${product.type} *${product.name}*`);
 
   link.setAttribute('href', `https://api.whatsapp.com/send?phone=556282067934&text=${message}`)
 
+  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+  if ( cart.find(item => item.name == product.name) !== undefined ) {
+    button.innerHTML = '&#10006;';
+    button.style.fontSize = '25px';
+  } else {
+    button.innerHTML = '+';
+    button.style.fontSize = '40px';
+  }
+
   button.onclick = () => {
-    addToCart(product);
+    if (button.innerHTML == '+') {
+      addToCart(product);
+      button.innerHTML = '&#10006;';
+      button.style.fontSize = '25px';
+    } else {
+      removeOfCart(product);
+      button.innerHTML = '+';
+      button.style.fontSize = '40px';
+    }
   }
 
   card.setAttribute('class', 'default-display card');
   title.setAttribute('class', 'default-display');
   button.setAttribute('class', 'default-display');
 
-  button.appendChild(buttonText);
   title.appendChild(titleText);
 
   image.setAttribute('src', `./images/${product.name}.jpg`);
