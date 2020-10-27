@@ -145,6 +145,7 @@ products.map(product => {
   let button = document.createElement('button');
   let link = document.createElement('a');
   let titleText = document.createTextNode(product.name);
+  let price = document.createElement('div');
 
   let message = window.encodeURIComponent(`Olá!\n\nTenho interesse no ${product.type} *${product.name}*`);
 
@@ -175,7 +176,10 @@ products.map(product => {
   card.setAttribute('class', 'default-display card');
   title.setAttribute('class', 'default-display');
   button.setAttribute('class', 'default-display');
+  price.setAttribute('class', 'price-card');
 
+
+  price.innerHTML = product.price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
   title.appendChild(titleText);
 
   image.setAttribute('src', `./images/${product.name}.jpg`);
@@ -183,6 +187,7 @@ products.map(product => {
 
   card.appendChild(title);
   card.appendChild(image);
+  card.appendChild(price);
   card.appendChild(button);
 
   content.appendChild(card);

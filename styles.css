@@ -231,6 +231,22 @@ header {
   color: #f5f5f5;
 }
 
+.price-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 30px;
+  max-height: 30px;
+  height: 30px;
+  background-color: #9EBC9F;
+  border-style: solid;
+  border-width: 0 0 0.5px 0;
+  border-color: #f5f5f5;
+  color: #f5f5f5;
+  font-weight: bold;
+}
+
 .floating-button {
   display: flex;
   justify-content: center;
