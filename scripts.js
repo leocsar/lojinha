@@ -9,11 +9,7 @@ const closeModalButton = document.getElementById('close-modal');
 const sendButton = document.getElementById('send');
 
 const products = [
-  { "price": 15.00, "type": "livro", "name": "The Walking Dead - A ascensão do governador" },
-  { "price": 15.00, "type": "livro", "name": "The Walking Dead - O caminho para woodbury" },
-  { "price": 10.00, "type": "livro", "name": "Cidades de papel" },
   { "price": 10.00, "type": "livro", "name": "O teorema Katherine" },
-  { "price": 10.00, "type": "livro", "name": "Quem é você Alasca" },
   { "price": 15.00, "type": "livro", "name": "A conspiração" },       
   { "price": 10.00, "type": "livro", "name": "O lado bom da vida" },
   { "price": 15.00, "type": "livro", "name": "Grandes Mestres - Toulouse Lautrec" },
