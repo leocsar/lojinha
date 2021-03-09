@@ -179,7 +179,6 @@ window.onload = () => {
     button.setAttribute('class', 'default-display');
     price.setAttribute('class', 'price-card');
   
-  
     price.innerHTML = product.price.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})
     title.appendChild(titleText);
   
