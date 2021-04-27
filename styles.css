@@ -243,15 +243,21 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 100%;
-  min-height: 30px;
-  max-height: 30px;
-  height: 30px;
+
+  min-height: 40px;
+  max-height: 40px;
+  height: 40px;
+
   background-color: #222;
+
   border-style: solid;
   border-width: 0 0 0.5px 0;
   border-color: #f5f5f5;
+
   color: #f5f5f5;
+
   font-weight: bold;
 }
 
